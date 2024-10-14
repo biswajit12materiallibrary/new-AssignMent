@@ -1,0 +1,27 @@
+
+
+{
+  "apps": [
+    {
+      "script": "dist/app.js",
+      "watch": false,
+      "ignore_watch": [
+        "node_modules",
+        "src/assets",
+        "dist/assets",
+        "src/logs/logger.log",
+        "dist/logs/logger.log"
+      ],
+      "watch_options": {
+        "followSymlinks": false
+      },
+      "instances": "max",
+      "exec_mode": "cluster",
+      "name": "admin-backend",
+      "env": {
+        "primary": false
+      }
+    }
+  ]
+}
+
