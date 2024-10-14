@@ -1,2 +1,1 @@
-# partners
 # new-assignment
