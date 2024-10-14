@@ -1,0 +1,6 @@
+{
+  "exec": "node --max-old-space-size=809909096 --expose-gc -r ts-node/register src/app.ts",
+  "watch": ["src"],
+  "ext": "ts",
+  "ignore": ["dist"]
+}
