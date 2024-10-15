@@ -9,31 +9,31 @@ const auth = new Auth();
 const admincontroller = new adminController();
 // Define the types of the middlewaresDownloadObj to ensure it complies with TypeScript
 export const middlewaresAdminObj: {
-  [key: string]: middlewareObjI;
+  [key: string]: RequestHandler[];
 } = {
-  CREATEUSER: {
-    validation: userManagementValidation.createByAdminUser, // The validation is an array of middlewares
-    auth: auth.authentication,
-    authorization: auth.authorization,
-    controller: admincontroller.createUser,
-  },
+  CREATEUSER: [
+    ...userManagementValidation.createByAdminUser, // The validation is an array of middlewares
+    auth.authentication,
+    auth.authorization,
+    admincontroller.createUser,
+  ],
 
-  GETALLUSER: {
-    validation: userManagementValidation.getAllUser, // The validation is an array of middlewares
-    auth: auth.authentication,
-    authorization: auth.authorization,
-    controller: admincontroller.getAllUser,
-  },
-  UPADATEUSER: {
-    validation: userManagementValidation.updateUser, // The validation is an array of middlewares
-    auth: auth.authentication,
-    authorization: auth.authorization,
-    controller: admincontroller.updateUser,
-  },
-  DELETEUSER: {
-    validation: userManagementValidation.deleteUser, // The validation is an array of middlewares
-    auth: auth.authentication,
-    authorization: auth.authorization,
-    controller: admincontroller.deleteUser,
-  },
+  GETALLUSER: [
+    ...userManagementValidation.getAllUser, // The validation is an array of middlewares
+    auth.authentication,
+    auth.authorization,
+    admincontroller.getAllUser,
+  ],
+  UPADATEUSER: [
+    ...userManagementValidation.updateUser, // The validation is an array of middlewares
+    auth.authentication,
+    auth.authorization,
+    admincontroller.updateUser,
+  ],
+  DELETEUSER: [
+    ...userManagementValidation.deleteUser, // The validation is an array of middlewares
+    auth.authentication,
+    auth.authorization,
+    admincontroller.deleteUser,
+  ],
 };

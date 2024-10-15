@@ -41,7 +41,7 @@ export interface CustomUserRequest extends ExpressRequest {
   files?: any;
 }
 export const allRouteFuctionMiddleware = (
-  middlewareObj: Record<string, middlewareObjI>
+  middlewareObj: Record<string, RequestHandler[]>
 ): RequestHandler => {
   return (req: CustomUserRequest, res: Response, next: NextFunction) => {
     let downloadKey: string =
@@ -58,27 +58,9 @@ export const allRouteFuctionMiddleware = (
       });
     }
     // Dynamically extract middlewares based on the downloadKey
-    const oneObjForApiBykey: middlewareObjI = middlewareObj[downloadKey];
-    let middlewares: RequestHandler[] = [];
+    const oneObjForApiBykey: RequestHandler[] = middlewareObj[downloadKey];
 
-    if (oneObjForApiBykey?.validation) {
-      middlewares.push(...oneObjForApiBykey.validation);
-    } else {
-      console.log("No validation middleware");
-    }
-
-    // Dynamically add other middlewares without hardcoding (auth, multerMiddleware, controller)
-    Object.keys(oneObjForApiBykey).forEach((key) => {
-      if (
-        key !== "validation" &&
-        oneObjForApiBykey[key as keyof middlewareObjI]
-      ) {
-        middlewares.push(
-          oneObjForApiBykey[key as keyof middlewareObjI] as RequestHandler
-        );
-      }
-    });
     // Apply the middleware chain dynamically
-    return nextMiddleware(req, res, next, middlewares, 0);
+    return nextMiddleware(req, res, next, oneObjForApiBykey, 0);
   };
 };

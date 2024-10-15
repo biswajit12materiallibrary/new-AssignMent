@@ -8,20 +8,20 @@ const auth = new Auth();
 const userController = new UserController();
 // Define the types of the middlewaresDownloadObj to ensure it complies with TypeScript
 export const middlewaresUserObj: {
-  [key: string]: middlewareObjI;
+  [key: string]: RequestHandler[];
 } = {
-  SIGNUP: {
-    validation: userManagementValidation.createUser, // The validation is an array of middlewares
-    controller: userController.createUser,
-  },
-  LOGIN: {
-    validation: userManagementValidation.login, // The validation is an array of middlewares
-    controller: userController.login,
-  },
+  SIGNUP: [
+    ...userManagementValidation.createUser, // The validation is an array of middlewares
+    userController.createUser,
+  ],
+  LOGIN: [
+    ...userManagementValidation.login, // The validation is an array of middlewares
+    userController.login,
+  ],
 
-  PROFILE: {
-    validation: userManagementValidation.baseAuth, // The validation is an array of middlewares
-    auth: auth.authentication,
-    controller: userController.getProfileById,
-  },
+  PROFILE: [
+    ...userManagementValidation.baseAuth, // The validation is an array of middlewares
+    auth.authentication,
+    userController.getProfileById,
+  ],
 };
